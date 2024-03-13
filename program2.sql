@@ -61,9 +61,11 @@ WHERE Grade > (
 
 -- 2. Find the name and numbers of all salesmen who had more than one customer.
 
-SELECT S.SALESMAN_ID, S.NAME
-FROM SALESMAN S
-WHERE S.SALESMAN_ID IN (SELECT C.SALESMAN_ID FROM CUSTOMER1 C GROUP BY C.SALESMAN_ID HAVING COUNT(*) > 1);
+SELECT Name, COUNT(*) AS Number_of_Customers
+FROM SALESMAN
+JOIN CUSTOMER ON SALESMAN.Salesman_id = CUSTOMER.Salesman_id
+GROUP BY SALESMAN.Salesman_id
+HAVING COUNT(*) > 1;
 
 -- 3. List all salesmen and indicate those who have and don’t have customers in their cities (Use UNION operation.)
 
