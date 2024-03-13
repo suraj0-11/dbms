@@ -42,6 +42,34 @@ CREATE TABLE WORKS_ON (
 );
 
 
+
+-- Insertion for DEPARTMENT table
+INSERT INTO DEPARTMENT VALUES ('D001', 'HR', TO_DATE('01-JAN-2024', 'DD-MON-YYYY'), 'SSN001');
+INSERT INTO DEPARTMENT VALUES ('D002', 'IT', TO_DATE('01-JAN-2024', 'DD-MON-YYYY'), 'SSN002');
+INSERT INTO DEPARTMENT VALUES ('D003', 'Finance', TO_DATE('01-JAN-2024', 'DD-MON-YYYY'), 'SSN003');
+
+-- Insertion for EMPLOYEE table
+INSERT INTO EMPLOYEE VALUES ('SSN001', 'John', 'Scott', '123 Main St', 'M', 60000, NULL, 'D001');
+INSERT INTO EMPLOYEE VALUES ('SSN002', 'Jane', 'Doe', '456 Elm St', 'F', 70000, NULL, 'D002');
+INSERT INTO EMPLOYEE VALUES ('SSN003', 'Michael', 'Johnson', '789 Oak St', 'M', 80000, 'SSN001', 'D003');
+
+-- Insertion for DLOCATION table
+INSERT INTO DLOCATION VALUES ('Location1', 'D001');
+INSERT INTO DLOCATION VALUES ('Location2', 'D002');
+INSERT INTO DLOCATION VALUES ('Location3', 'D003');
+
+-- Insertion for PROJECT table
+INSERT INTO PROJECT VALUES (101, 'Project1', 'Location1', 'D001');
+INSERT INTO PROJECT VALUES (102, 'Project2', 'Location2', 'D002');
+INSERT INTO PROJECT VALUES (103, 'Project3', 'Location3', 'D003');
+
+-- Insertion for WORKS_ON table
+INSERT INTO WORKS_ON VALUES (40, 'SSN001', 101);
+INSERT INTO WORKS_ON VALUES (35, 'SSN002', 102);
+INSERT INTO WORKS_ON VALUES (30, 'SSN003', 103);
+
+
+
 -- Query 1: List all project numbers for projects that involve an employee whose last name is ‘Scott’
 SELECT DISTINCT PNo
 FROM WORKS_ON
