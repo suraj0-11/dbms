@@ -67,23 +67,20 @@ JOIN CUSTOMER ON SALESMAN.Salesman_id = CUSTOMER.Salesman_id
 GROUP BY SALESMAN.Salesman_id
 HAVING COUNT(*) > 1;
 
--- 3. List all salesmen and indicate those who have and don’t have customers in their cities (Use UNION operation.)
-
-SELECT SALESMAN_ID, NAME, CUST_NAME, COMMISSION
+-- 3. List salesmen with their customers or indicate if they have no customers in their cities
+SELECT S.SALESMAN_ID, S.NAME, S.COMMISSION,
+       NVL(C.CUST_NAME, 'NO CUSTOMER') AS CUSTOMER_NAME
 FROM SALESMAN S
-LEFT JOIN CUSTOMER1 C ON S.CITY = C.CITY
-UNION
-SELECT SALESMAN_ID, NAME, 'NO CUSTOMER', COMMISSION
-FROM SALESMAN
-WHERE SALESMAN_ID NOT IN (SELECT SALESMAN_ID FROM CUSTOMER1 WHERE CUSTOMER1.CITY = SALESMAN.CITY);
+LEFT JOIN CUSTOMER1 C ON S.CITY = C.CITY;
 
--- 4. Create a view that finds the salesman who has the customer with the highest order of a day.
-
+-- 4. Create a view to find the salesman with the highest daily order
 CREATE VIEW ELITSALESMAN AS
 SELECT S.SALESMAN_ID, S.NAME, O.ORD_DATE, O.ORD_NO
 FROM SALESMAN S
 JOIN ORDERS O ON S.SALESMAN_ID = O.SALESMAN_ID
-WHERE (O.ORD_DATE, O.PURCHASE_AMT) IN (SELECT ORD_DATE, MAX(PURCHASE_AMT) FROM ORDERS GROUP BY ORD_DATE);
+WHERE (O.ORD_DATE, O.PURCHASE_AMT) IN (
+    SELECT ORD_DATE, MAX(PURCHASE_AMT) FROM ORDERS GROUP BY ORD_DATE
+);
 
 -- 5. Demonstrate the DELETE operation by removing salesman with id 1000. All his orders must also be deleted.
 
