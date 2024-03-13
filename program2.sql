@@ -51,9 +51,13 @@ INSERT INTO ORDERS VALUES (54, 550, '09-MAR-17', 12, 2000);
 -- Queries
 -- 1. Count the customers with grades above Bangalore’s average.
 
-SELECT COUNT(DISTINCT CUSTOMER_ID)
-FROM CUSTOMER1
-WHERE GRADE > (SELECT AVG(GRADE) FROM CUSTOMER1 WHERE CITY = 'BANGALORE');
+SELECT COUNT(*)
+FROM CUSTOMER
+WHERE Grade > (
+    SELECT AVG(Grade)
+    FROM CUSTOMER
+    WHERE City = 'Bangalore'
+);
 
 -- 2. Find the name and numbers of all salesmen who had more than one customer.
 
