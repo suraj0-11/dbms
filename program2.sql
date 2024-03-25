@@ -52,20 +52,21 @@ INSERT INTO ORDERS VALUES (54, 550, '09-MAR-17', 12, 2000);
 -- 1. Count the customers with grades above Bangalore’s average.
 
 SELECT COUNT(*)
-FROM CUSTOMER
-WHERE Grade > (
-    SELECT AVG(Grade)
-    FROM CUSTOMER
-    WHERE City = 'Bangalore'
+FROM CUSTOMER1
+WHERE GRADE > (
+    SELECT AVG(GRADE)
+    FROM CUSTOMER1
+    WHERE CITY = 'BANGALORE'
 );
 
 -- 2. Find the name and numbers of all salesmen who had more than one customer.
 
-SELECT Name, COUNT(*) AS Number_of_Customers
-FROM SALESMAN
-JOIN CUSTOMER ON SALESMAN.SALESMAN_ID = CUSTOMER.SALESMAN_ID
-GROUP BY SALESMAN.SALESMAN_ID
+SELECT S.NAME, COUNT(*) AS Number_of_Customers
+FROM SALESMAN S
+JOIN CUSTOMER1 C ON S.SALESMAN_ID = C.SALESMAN_ID
+GROUP BY S.SALESMAN_ID, S.NAME
 HAVING COUNT(*) > 1;
+
 
 -- 3. List salesmen with their customers or indicate if they have no customers in their cities
 SELECT S.SALESMAN_ID, S.NAME, S.COMMISSION,
@@ -81,6 +82,7 @@ JOIN ORDERS O ON S.SALESMAN_ID = O.SALESMAN_ID
 WHERE (O.ORD_DATE, O.PURCHASE_AMT) IN (
     SELECT ORD_DATE, MAX(PURCHASE_AMT) FROM ORDERS GROUP BY ORD_DATE
 );
+
 
 -- 5. Demonstrate the DELETE operation by removing salesman with id 1000. All his orders must also be deleted.
 
