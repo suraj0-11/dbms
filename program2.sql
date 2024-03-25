@@ -63,8 +63,8 @@ WHERE Grade > (
 
 SELECT Name, COUNT(*) AS Number_of_Customers
 FROM SALESMAN
-JOIN CUSTOMER ON SALESMAN.Salesman_id = CUSTOMER.Salesman_id
-GROUP BY SALESMAN.Salesman_id
+JOIN CUSTOMER ON SALESMAN.SALESMAN_ID = CUSTOMER.SALESMAN_ID
+GROUP BY SALESMAN.SALESMAN_ID
 HAVING COUNT(*) > 1;
 
 -- 3. List salesmen with their customers or indicate if they have no customers in their cities
