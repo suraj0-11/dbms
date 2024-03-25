@@ -1,12 +1,9 @@
--- Table creation for DEPARTMENT
 CREATE TABLE DEPARTMENT (
-    DNO VARCHAR2(20) PRIMARY KEY,
-    DNAME VARCHAR2(20),
-    MGRSTARTDATE DATE,
-    MGRSSN VARCHAR2(20)
-);
+DNO VARCHAR (20) PRIMARY KEY,
+DNAME VARCHAR (20),
+MGRSTARTDATE DATE,
+MGRSSN VARCHAR (20));
 
--- Table creation for EMPLOYEE
 CREATE TABLE EMPLOYEE (
     SSN VARCHAR2(20) PRIMARY KEY,
     FNAME VARCHAR2(20),
@@ -17,6 +14,8 @@ CREATE TABLE EMPLOYEE (
     SUPERSSN VARCHAR2(20) REFERENCES EMPLOYEE (SSN),
     DNO VARCHAR2(20) REFERENCES DEPARTMENT (DNO)
 );
+
+
 
 -- Table creation for DLOCATION
 CREATE TABLE DLOCATION (
@@ -69,40 +68,44 @@ INSERT INTO WORKS_ON VALUES (35, 'SSN002', 102);
 INSERT INTO WORKS_ON VALUES (30, 'SSN003', 103);
 
 
-
 -- Query 1: List all project numbers for projects that involve an employee whose last name is ‘Scott’
-SELECT DISTINCT PNo
+SELECT DISTINCT PNO
 FROM WORKS_ON
-WHERE SSN IN (SELECT SSN FROM EMPLOYEE WHERE Name LIKE '%Scott%')
-OR SSN IN (SELECT MgrSSN FROM DEPARTMENT WHERE DNo IN (SELECT DNo FROM PROJECT));
+WHERE SSN IN (SELECT SSN FROM EMPLOYEE WHERE LNAME LIKE '%Scott%')
+OR PNO IN (SELECT PNO FROM PROJECT WHERE DNO IN (SELECT DNO FROM WORKS_ON));
 
--- Query 2: Show resulting salaries if every employee working on the ‘IoT’ project is given a 10 percent raise
+
+
+
+-- Query 2: Show resulting salaries if every employee working on the ‘Project3’ project is given a 10 percent raise
 UPDATE EMPLOYEE
-SET Salary = Salary * 1.10
-WHERE SSN IN (SELECT SSN FROM WORKS_ON WHERE PNo = (SELECT PNo FROM PROJECT WHERE PName = 'IoT'));
+SET SALARY = SALARY * 1.10
+WHERE SSN IN (SELECT SSN FROM WORKS_ON WHERE PNO = (SELECT PNO FROM PROJECT WHERE PNAME = 'Project3'));
 
--- Query 3: Find sum, maximum, minimum, and average salary of employees in the 'Accounts' department
-SELECT SUM(Salary) AS Total_Salary, MAX(Salary) AS Max_Salary, MIN(Salary) AS Min_Salary, AVG(Salary) AS Avg_Salary
+SELECT * FROM EMPLOYEE;
+
+-- Query 3: Find sum, maximum, minimum, and average salary of employees in the 'Finance' department
+SELECT SUM(SALARY) AS Total_Salary, MAX(SALARY) AS Max_Salary, MIN(SALARY) AS Min_Salary, AVG(SALARY) AS Avg_Salary
 FROM EMPLOYEE
-WHERE DNo IN (SELECT DNo FROM DEPARTMENT WHERE DName = 'Accounts');
+WHERE DNO IN (SELECT DNO FROM DEPARTMENT WHERE DNAME = 'Finance');
 
--- Query 4: Retrieve names of employees working on all projects controlled by department number 5
-SELECT Name
+-- Query 4: Retrieve names of employees working on all projects controlled by department number 'D002'
+SELECT FNAME, LNAME
 FROM EMPLOYEE E
 WHERE NOT EXISTS (
-    SELECT PNo
+    SELECT PNO
     FROM PROJECT P
-    WHERE P.DNo = 5
-    AND P.PNo NOT IN (
-        SELECT PNo
+    WHERE P.DNO = 'D002'
+    AND P.PNO NOT IN (
+        SELECT PNO
         FROM WORKS_ON W
         WHERE W.SSN = E.SSN
     )
 );
 
--- Query 5: Retrieve department numbers and counts of employees making more than Rs. 600,000
-SELECT DNo, COUNT(*) AS Employee_Count
+-- Query 5: Retrieve department numbers and counts of employees making more than 60000
+SELECT DNO, COUNT(*) AS Employee_Count
 FROM EMPLOYEE
-WHERE Salary > 600000
-GROUP BY DNo
-HAVING COUNT(*) > 5;
+WHERE SALARY > 60000
+GROUP BY DNO;
+
