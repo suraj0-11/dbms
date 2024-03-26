@@ -69,7 +69,7 @@ INSERT INTO WORKS_ON VALUES (30, 'SSN003', 103);
 
 
 -- Query 1: List all project numbers for projects that involve an employee whose last name is ‘Scott’
-SELECT DISTINCT PNO
+SELECT PNO
 FROM WORKS_ON
 WHERE SSN IN (SELECT SSN FROM EMPLOYEE WHERE LNAME LIKE '%Scott%');
 
