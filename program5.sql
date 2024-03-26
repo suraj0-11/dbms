@@ -81,6 +81,8 @@ UPDATE EMPLOYEE
 SET SALARY = SALARY * 1.10
 WHERE SSN IN (SELECT SSN FROM WORKS_ON WHERE PNO = (SELECT PNO FROM PROJECT WHERE PNAME = 'Project3'));
 
+-- well i used project3 instead of Iot u can change insertion values of project while executing lol
+
 SELECT * FROM EMPLOYEE;
 
 -- Query 3: Find sum, maximum, minimum, and average salary of employees in the 'Finance' department
